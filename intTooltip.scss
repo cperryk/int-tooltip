@@ -1,37 +1,31 @@
 $color: rgb(191, 191, 191);
-.arrow{
+.intTooltip-arrow{
 	position: absolute;
-}
-.arrow-up {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid $color;
-}
+	width: 0;
+	height: 0;
+	&.arrow-up {
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-bottom: 10px solid $color;
+	}
 
-.arrow-down {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid $color;
-}
+	&.arrow-down {
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-top: 10px solid $color;
+	}
 
-.arrow-right {
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-left: 10px solid $color;
-}
+	&.arrow-right {
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-left: 10px solid $color;
+	}
 
-.arrow-left {
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right:10px solid $color;
+	&.arrow-left {
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-right:10px solid $color;
+	}
 }
 
 .intTooltip{
@@ -46,18 +40,15 @@ $color: rgb(191, 191, 191);
 	position: relative;
 	padding: 1em;
 	box-shadow: 5px 5px 5px rgba(0,0,0,0.05);
-	// padding: 10px;
-	// padding: 1em;
-}
-
-.btn-ex{
-	position: absolute;
-	top: 0px;
-	right: 3px;
-	line-height: 100%;
-	color: gray;
-	cursor: pointer;
-	&:hover{
-		color: black;
+	.btn-ex{
+		position: absolute;
+		top: 0px;
+		right: 3px;
+		line-height: 100%;
+		color: gray;
+		cursor: pointer;
+		&:hover{
+			color: black;
+		}
 	}
 }

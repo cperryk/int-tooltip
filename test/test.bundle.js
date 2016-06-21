@@ -26,6 +26,7 @@ var IntTooltip = {
 		});
 	},
 	openTooltip: function openTooltip($at_obj, conf) {
+		console.log('IntTooltip.openTooltip');
 		conf = conf || {};
 		if (typeof conf === 'string') {
 			conf = { html: conf };
@@ -79,10 +80,11 @@ var Tooltip = function () {
 
 		_classCallCheck(this, Tooltip);
 
+		console.log('new tooltip', conf);
 		this.$target = typeof $target === 'string' ? $($target) : $target;
 		this.conf = conf;
 		this.conf.position = this.conf.position || 'bottom';
-		this.$triangle = $('<div class="arrow">').appendTo('body');
+		this.$triangle = $('<div class="intTooltip-arrow">').appendTo('body');
 		this.$container = $('<div>').addClass('intTooltip').html('\n\t\t\t\t\t<div class="intTooltip-inner">\n\t\t\t\t\t\t<div class="intTooltip-contents">\n\t\t\t\t\t\t<div class="btn-ex">&#215;</div>\n\t\t\t\t\t\t' + this.conf.html + '\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t').appendTo('body');
 		if (this.conf.id) {
 			this.$container.addClass('intTooltip-' + this.conf.id);
@@ -91,11 +93,12 @@ var Tooltip = function () {
 			_this2.close();
 		});
 		this.reposition();
-		if (this.interval !== false) {
+		if (this.conf.interval !== false) {
 			this.interval = setInterval(function () {
 				_this2.reposition();
-			}, this.interval || 1000);
+			}, this.conf.interval || 1000);
 		}
+		console.log(this.$container[0]);
 		return this;
 	}
 
@@ -130,8 +133,6 @@ var Tooltip = function () {
 				// if successfully positioned, stop
 				if (positioned) {
 					break;
-				} else {
-					this.close();
 				}
 			}
 			// if all positions failed, set to the preferenced position
@@ -237,6 +238,7 @@ var Tooltip = function () {
 	}, {
 		key: 'close',
 		value: function close() {
+			console.log('close');
 			if (this.$container) {
 				this.$container.remove();
 			}
@@ -269,7 +271,7 @@ var Tooltip = function () {
 module.exports = IntTooltip;
 
 },{"./intTooltip.min.css":2}],2:[function(require,module,exports){
-var css = ".arrow {\n  position: absolute;\n}\n.arrow-up {\n  width: 0;\n  height: 0;\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  border-bottom: 10px solid #bfbfbf;\n}\n.arrow-down {\n  width: 0;\n  height: 0;\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  border-top: 10px solid #bfbfbf;\n}\n.arrow-right {\n  width: 0;\n  height: 0;\n  border-top: 10px solid transparent;\n  border-bottom: 10px solid transparent;\n  border-left: 10px solid #bfbfbf;\n}\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 10px solid transparent;\n  border-bottom: 10px solid transparent;\n  border-right: 10px solid #bfbfbf;\n}\n.intTooltip {\n  max-width: 300px;\n  position: absolute;\n  padding: 10px;\n}\n.intTooltip-inner {\n  background-color: white;\n  border: 1px solid #bfbfbf;\n  position: relative;\n  padding: 1em;\n  box-shadow: 5px 5px 5px rgba(0,0,0,0.05);\n}\n.btn-ex {\n  position: absolute;\n  top: 0px;\n  right: 3px;\n  line-height: 100%;\n  color: gray;\n  cursor: pointer;\n}\n.btn-ex:hover {\n  color: black;\n}\n"; (require("browserify-css").createStyle(css, { "href": "intTooltip.min.css"})); module.exports = css;
+var css = ".intTooltip-arrow {\n  position: absolute;\n  width: 0;\n  height: 0;\n}\n.intTooltip-arrow.arrow-up {\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  border-bottom: 10px solid #bfbfbf;\n}\n.intTooltip-arrow.arrow-down {\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  border-top: 10px solid #bfbfbf;\n}\n.intTooltip-arrow.arrow-right {\n  border-top: 10px solid transparent;\n  border-bottom: 10px solid transparent;\n  border-left: 10px solid #bfbfbf;\n}\n.intTooltip-arrow.arrow-left {\n  border-top: 10px solid transparent;\n  border-bottom: 10px solid transparent;\n  border-right: 10px solid #bfbfbf;\n}\n.intTooltip {\n  max-width: 300px;\n  position: absolute;\n  padding: 10px;\n}\n.intTooltip-inner {\n  background-color: white;\n  border: 1px solid #bfbfbf;\n  position: relative;\n  padding: 1em;\n  box-shadow: 5px 5px 5px rgba(0,0,0,0.05);\n}\n.intTooltip-inner .btn-ex {\n  position: absolute;\n  top: 0px;\n  right: 3px;\n  line-height: 100%;\n  color: gray;\n  cursor: pointer;\n}\n.intTooltip-inner .btn-ex:hover {\n  color: black;\n}\n"; (require("browserify-css").createStyle(css, { "href": "intTooltip.min.css"})); module.exports = css;
 },{"browserify-css":3}],3:[function(require,module,exports){
 'use strict';
 // For more information about browser field, check out the browser field at https://github.com/substack/browserify-handbook#browser-field.

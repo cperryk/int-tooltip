@@ -20,6 +20,7 @@ const IntTooltip = {
 		});
 	},
 	openTooltip: function($at_obj, conf){
+		console.log('IntTooltip.openTooltip');
 		conf = conf || {};
 		if(typeof conf === 'string'){
 			conf = {html: conf};
@@ -65,10 +66,11 @@ class Tooltip{
 	 * @return {object} - This Tooltip instance.
 	 */
 	constructor($target, conf = {}){
+		console.log('new tooltip', conf);
 		this.$target = typeof $target === 'string' ? $($target) : $target;
 		this.conf = conf;
 		this.conf.position = this.conf.position || 'bottom';
-		this.$triangle = $('<div class="arrow">')
+		this.$triangle = $('<div class="intTooltip-arrow">')
 			.appendTo('body');
 		this.$container = $('<div>')
 			.addClass('intTooltip')
@@ -88,11 +90,12 @@ class Tooltip{
 			this.close();
 		});
 		this.reposition();
-		if(this.interval !== false){
+		if(this.conf.interval !== false){
 			this.interval = setInterval(()=>{
 				this.reposition();
-			}, this.interval || 1000);
+			}, this.conf.interval || 1000);
 		}
+		console.log(this.$container[0]);
 		return this;
 	}
 	reposition(){
@@ -121,9 +124,6 @@ class Tooltip{
 			// if successfully positioned, stop
 			if(positioned){
 				break;
-			}
-			else{
-				this.close();
 			}
 		}
 		// if all positions failed, set to the preferenced position
@@ -240,6 +240,7 @@ class Tooltip{
 	 * @return {null}
 	 */
 	close(){
+		console.log('close');
 		if(this.$container){
 			this.$container.remove();
 		}
