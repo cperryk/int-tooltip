@@ -1,57 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
-// For more information about browser field, check out the browser field at https://github.com/substack/browserify-handbook#browser-field.
-
-module.exports = {
-    // Create a <link> tag with optional data attributes
-    createLink: function(href, attributes) {
-        var head = document.head || document.getElementsByTagName('head')[0];
-        var link = document.createElement('link');
-
-        link.href = href;
-        link.rel = 'stylesheet';
-
-        for (var key in attributes) {
-            if ( ! attributes.hasOwnProperty(key)) {
-                continue;
-            }
-            var value = attributes[key];
-            link.setAttribute('data-' + key, value);
-        }
-
-        head.appendChild(link);
-    },
-    // Create a <style> tag with optional data attributes
-    createStyle: function(cssText, attributes) {
-        var head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-
-        style.type = 'text/css';
-
-        for (var key in attributes) {
-            if ( ! attributes.hasOwnProperty(key)) {
-                continue;
-            }
-            var value = attributes[key];
-            style.setAttribute('data-' + key, value);
-        }
-        
-        if (style.sheet) { // for jsdom and IE9+
-            style.innerHTML = cssText;
-            style.sheet.cssText = cssText;
-            head.appendChild(style);
-        } else if (style.styleSheet) { // for IE8 and below
-            head.appendChild(style);
-            style.styleSheet.cssText = cssText;
-        } else { // for Chrome, Firefox, and Safari
-            style.appendChild(document.createTextNode(cssText));
-            head.appendChild(style);
-        }
-    }
-};
-
-},{}],2:[function(require,module,exports){
-'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -77,13 +25,13 @@ var IntTooltip = {
 			_this.openTooltip(btn, conf);
 		});
 	},
-	openTooltip: function openTooltip(at_obj, conf) {
+	openTooltip: function openTooltip($at_obj, conf) {
 		conf = conf || {};
 		if (typeof conf === 'string') {
 			conf = { html: conf };
 		}
 		conf.id = conf.id || 'default';
-		var tooltip = new Tooltip(at_obj, conf);
+		var tooltip = new Tooltip($at_obj, conf);
 		if (IntTooltip.tooltips[conf.id]) {
 			IntTooltip.tooltips[conf.id].close();
 		}
@@ -98,7 +46,8 @@ var IntTooltip = {
 			}
 			delete tooltips[i];
 		}
-	}
+	},
+	Tooltip: Tooltip
 };
 IntTooltip.open = IntTooltip.openTooltip;
 
@@ -130,7 +79,7 @@ var Tooltip = function () {
 
 		_classCallCheck(this, Tooltip);
 
-		this.$target = $target;
+		this.$target = typeof $target === 'string' ? $($target) : $target;
 		this.conf = conf;
 		this.conf.position = this.conf.position || 'bottom';
 		this.$triangle = $('<div class="arrow">').appendTo('body');
@@ -249,7 +198,7 @@ var Tooltip = function () {
 					anchor.y = coords.cy;
 			}
 
-			var classname = undefined;
+			var classname = void 0;
 			var css = {};
 			switch (direction) {
 				case 'top':
@@ -319,9 +268,61 @@ var Tooltip = function () {
 
 module.exports = IntTooltip;
 
-},{"./intTooltip.min.css":3}],3:[function(require,module,exports){
+},{"./intTooltip.min.css":2}],2:[function(require,module,exports){
 var css = ".arrow {\n  position: absolute;\n}\n.arrow-up {\n  width: 0;\n  height: 0;\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  border-bottom: 10px solid #bfbfbf;\n}\n.arrow-down {\n  width: 0;\n  height: 0;\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  border-top: 10px solid #bfbfbf;\n}\n.arrow-right {\n  width: 0;\n  height: 0;\n  border-top: 10px solid transparent;\n  border-bottom: 10px solid transparent;\n  border-left: 10px solid #bfbfbf;\n}\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 10px solid transparent;\n  border-bottom: 10px solid transparent;\n  border-right: 10px solid #bfbfbf;\n}\n.intTooltip {\n  max-width: 300px;\n  position: absolute;\n  padding: 10px;\n}\n.intTooltip-inner {\n  background-color: white;\n  border: 1px solid #bfbfbf;\n  position: relative;\n  padding: 1em;\n  box-shadow: 5px 5px 5px rgba(0,0,0,0.05);\n}\n.btn-ex {\n  position: absolute;\n  top: 0px;\n  right: 3px;\n  line-height: 100%;\n  color: gray;\n  cursor: pointer;\n}\n.btn-ex:hover {\n  color: black;\n}\n"; (require("browserify-css").createStyle(css, { "href": "intTooltip.min.css"})); module.exports = css;
-},{"browserify-css":1}],4:[function(require,module,exports){
+},{"browserify-css":3}],3:[function(require,module,exports){
+'use strict';
+// For more information about browser field, check out the browser field at https://github.com/substack/browserify-handbook#browser-field.
+
+module.exports = {
+    // Create a <link> tag with optional data attributes
+    createLink: function(href, attributes) {
+        var head = document.head || document.getElementsByTagName('head')[0];
+        var link = document.createElement('link');
+
+        link.href = href;
+        link.rel = 'stylesheet';
+
+        for (var key in attributes) {
+            if ( ! attributes.hasOwnProperty(key)) {
+                continue;
+            }
+            var value = attributes[key];
+            link.setAttribute('data-' + key, value);
+        }
+
+        head.appendChild(link);
+    },
+    // Create a <style> tag with optional data attributes
+    createStyle: function(cssText, attributes) {
+        var head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+        style.type = 'text/css';
+
+        for (var key in attributes) {
+            if ( ! attributes.hasOwnProperty(key)) {
+                continue;
+            }
+            var value = attributes[key];
+            style.setAttribute('data-' + key, value);
+        }
+        
+        if (style.sheet) { // for jsdom and IE9+
+            style.innerHTML = cssText;
+            style.sheet.cssText = cssText;
+            head.appendChild(style);
+        } else if (style.styleSheet) { // for IE8 and below
+            head.appendChild(style);
+            style.styleSheet.cssText = cssText;
+        } else { // for Chrome, Firefox, and Safari
+            style.appendChild(document.createTextNode(cssText));
+            head.appendChild(style);
+        }
+    }
+};
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 $(function () {
@@ -346,4 +347,4 @@ $(function () {
   });
 });
 
-},{"./../intTooltip.js":2}]},{},[4]);
+},{"./../intTooltip.js":1}]},{},[4]);

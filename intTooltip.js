@@ -19,13 +19,13 @@ const IntTooltip = {
 			this.openTooltip(btn, conf);
 		});
 	},
-	openTooltip: function(at_obj, conf){
+	openTooltip: function($at_obj, conf){
 		conf = conf || {};
 		if(typeof conf === 'string'){
 			conf = {html: conf};
 		}
 		conf.id = conf.id || 'default';
-		const tooltip = new Tooltip(at_obj, conf);
+		const tooltip = new Tooltip($at_obj, conf);
 		if(IntTooltip.tooltips[conf.id]){
 			IntTooltip.tooltips[conf.id].close();
 		}
@@ -40,7 +40,8 @@ const IntTooltip = {
 			}
 			delete tooltips[i];
 		}
-	}
+	},
+	Tooltip: Tooltip
 };
 IntTooltip.open = IntTooltip.openTooltip;
 
@@ -64,7 +65,7 @@ class Tooltip{
 	 * @return {object} - This Tooltip instance.
 	 */
 	constructor($target, conf = {}){
-		this.$target = $target;
+		this.$target = typeof $target === 'string' ? $($target) : $target;
 		this.conf = conf;
 		this.conf.position = this.conf.position || 'bottom';
 		this.$triangle = $('<div class="arrow">')
