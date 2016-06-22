@@ -1,11 +1,11 @@
 const css_node = require('./intTooltip.min.css');
 
 $(window)
-	.on('resize.intTooltip', function(){
+	.on('resize.intTooltip', ()=>{
 		IntTooltip.closeAll();
 	})
 	.unbind('keydown.intTooltip')
-	.on('keydown.intTooltip', function(e){
+	.on('keydown.intTooltip', (e)=>{
 		if(e.keyCode === 27){
 			IntTooltip.closeAll();
 		}
@@ -20,7 +20,6 @@ const IntTooltip = {
 		});
 	},
 	openTooltip: function($at_obj, conf){
-		console.log('IntTooltip.openTooltip');
 		conf = conf || {};
 		if(typeof conf === 'string'){
 			conf = {html: conf};
@@ -63,10 +62,10 @@ class Tooltip{
 	 * @param	 {string} conf.html - HTML to display in the tooltip.
 	 * @param  {string} conf.position - The direction in which the tooltip is preferred to appear relative
 	 * to the $target. Options: 'top', 'right', 'bottom', and 'left'. Default: 'bottom'.
+	 * @param  {boolean} conf.clickout - If true, clicking outside the tooltip will close it. Default: false.
 	 * @return {object} - This Tooltip instance.
 	 */
 	constructor($target, conf = {}){
-		console.log('new tooltip', conf);
 		this.$target = typeof $target === 'string' ? $($target) : $target;
 		this.conf = conf;
 		this.conf.position = this.conf.position || 'bottom';
@@ -95,7 +94,21 @@ class Tooltip{
 				this.reposition();
 			}, this.conf.interval || 1000);
 		}
-		console.log(this.$container[0]);
+		setTimeout(()=>{
+			if(this.conf.clickout){
+				$(window).on('click.intTooltip-clickout-' + this.conf.id, (e)=>{
+					if(e.target === this.$container.get(0)){
+						return;
+					}
+					if($(e.target).closest('.intTooltip').get(0) === this.$container.get(0)){
+						return;
+					}
+					else{
+						this.close();
+					}
+				});
+			}
+		}, 1);
 		return this;
 	}
 	reposition(){
@@ -240,7 +253,6 @@ class Tooltip{
 	 * @return {null}
 	 */
 	close(){
-		console.log('close');
 		if(this.$container){
 			this.$container.remove();
 		}
@@ -250,6 +262,7 @@ class Tooltip{
 		if(this.conf.onClose){
 			this.conf.onClose();
 		}
+		$(window).unbind('click.intTooltip-clickout-' + this.conf.id);
 		clearInterval(this.interval);
 	}
 }

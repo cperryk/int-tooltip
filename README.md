@@ -50,6 +50,7 @@ Closes all open tooltips. Executes if any tooltips are open and the user hits th
 - **opts.position**: String. Optional. The preferred direction in which the tooltip will appear, relative to $target. Options: "top", "right", "bottom", "left". Defaults to "bottom". If part of the tooltip appears off-screen in this direction, it will try other directions.
 - **opts.id**: String. Optional. A unique identifier for the tooltip. Defaults to `default`. If opened via `IntTooltip.open`, any tooltip that shares this ID will be closed first.
 - **opts.interval**: Number or boolean. Optional. The frequency at which the tooltip should check the $target for a change in position or dimension. If `false`, no polling is conducted. Defaults to `1000`.
+- **opts.clickout**: Boolean. Optional. If `true`, clicking outside the tooltip will close it.
 
 ### close() ###
 Closes this tooltip.

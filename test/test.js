@@ -18,5 +18,9 @@ $(function(){
     html: 'Group 2',
     id: 'group2',
   });
+  IntTooltip.bindButton('#clickout', {
+    html: 'If you click outside this box, the Tooltip should close',
+    clickout: true
+  });
 
 });

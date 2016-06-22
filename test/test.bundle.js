@@ -26,7 +26,6 @@ var IntTooltip = {
 		});
 	},
 	openTooltip: function openTooltip($at_obj, conf) {
-		console.log('IntTooltip.openTooltip');
 		conf = conf || {};
 		if (typeof conf === 'string') {
 			conf = { html: conf };
@@ -70,6 +69,7 @@ var Tooltip = function () {
   * @param	 {string} conf.html - HTML to display in the tooltip.
   * @param  {string} conf.position - The direction in which the tooltip is preferred to appear relative
   * to the $target. Options: 'top', 'right', 'bottom', and 'left'. Default: 'bottom'.
+  * @param  {boolean} conf.clickout - If true, clicking outside the tooltip will close it. Default: false.
   * @return {object} - This Tooltip instance.
   */
 
@@ -80,7 +80,6 @@ var Tooltip = function () {
 
 		_classCallCheck(this, Tooltip);
 
-		console.log('new tooltip', conf);
 		this.$target = typeof $target === 'string' ? $($target) : $target;
 		this.conf = conf;
 		this.conf.position = this.conf.position || 'bottom';
@@ -98,7 +97,20 @@ var Tooltip = function () {
 				_this2.reposition();
 			}, this.conf.interval || 1000);
 		}
-		console.log(this.$container[0]);
+		setTimeout(function () {
+			if (_this2.conf.clickout) {
+				$(window).on('click.intTooltip-clickout-' + _this2.conf.id, function (e) {
+					if (e.target === _this2.$container.get(0)) {
+						return;
+					}
+					if ($(e.target).closest('.intTooltip').get(0) === _this2.$container.get(0)) {
+						return;
+					} else {
+						_this2.close();
+					}
+				});
+			}
+		}, 1);
 		return this;
 	}
 
@@ -238,7 +250,6 @@ var Tooltip = function () {
 	}, {
 		key: 'close',
 		value: function close() {
-			console.log('close');
 			if (this.$container) {
 				this.$container.remove();
 			}
@@ -248,6 +259,7 @@ var Tooltip = function () {
 			if (this.conf.onClose) {
 				this.conf.onClose();
 			}
+			$(window).unbind('click.intTooltip-clickout-' + this.conf.id);
 			clearInterval(this.interval);
 		}
 	}], [{
@@ -346,6 +358,10 @@ $(function () {
   IntTooltip.bindButton('#group2', {
     html: 'Group 2',
     id: 'group2'
+  });
+  IntTooltip.bindButton('#clickout', {
+    html: 'If you click outside this box, the Tooltip should close',
+    clickout: true
   });
 });
 
