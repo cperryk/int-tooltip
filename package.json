@@ -1,6 +1,6 @@
 {
   "name": "int-tooltip",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "IntTooltip is a simple jQuery-based library for opening a tooltip on a page at a specified element.",
   "main": "intTooltip.js",
   "dependencies": {
