@@ -189,6 +189,19 @@ class Tooltip{
 	 */
 	position(direction, coords){
 
+		if(this.last_coords){
+			let coord_change;
+			for(let key in coords){
+				if(coords[key] !== this.last_coords[key]){
+					coord_change = true;
+					break;
+				}
+			}
+			if((!coord_change) && this.last_direction === direction){
+				return;
+			}
+		}
+
 		// Get the "anchor" for the tooltip. That's a left-top document coordinate that determines where
 		// the tooltip will appear.
 		const anchor = {};
@@ -238,6 +251,7 @@ class Tooltip{
 				classname = 'arrow-right';
 				break;
 		}
+
 		this.$triangle
 			.removeClass('arrow-down arrow-left arrow-up arrow-right')
 			.addClass(classname)
@@ -247,6 +261,8 @@ class Tooltip{
 			.css(css)
 			.css('margin-' + direction, 15);
 
+		this.last_direction = direction;
+		this.last_coords = coords;
 	}
 	/**
 	 * Closes this tooltip, removing its elements.
