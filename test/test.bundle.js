@@ -58,7 +58,8 @@ IntTooltip.open = IntTooltip.openTooltip;
 var Tooltip = function () {
 	/**
   * Constructs a Tooltip instance.
-  * @param  {object} $target - jQuery selection of element the tooltip will appear at.
+  * @param  {object|array} $target - jQuery selection of element the tooltip will appear at.
+  *                                Or an array of coordinates.
   * @param  {object} conf - Options dictionary.
   * @param  {number} conf.interval - In case the $target position changes, the tooltip will poll
   * its position and reposition itself as needed. This option specifies the frequency of the poll.
@@ -282,6 +283,17 @@ var Tooltip = function () {
 	}], [{
 		key: 'getCoords',
 		value: function getCoords($target) {
+			console.log($target);
+			if ($target instanceof jQuery === false) {
+				return {
+					x1: $target.x,
+					x2: $target.x,
+					cx: $target.x,
+					y1: $target.y,
+					y2: $target.y,
+					cy: $target.y
+				};
+			}
 			var off = $target.offset();
 			return {
 				x1: off.left,
@@ -379,6 +391,16 @@ $(function () {
   IntTooltip.bindButton('#clickout', {
     html: 'If you click outside this box, the Tooltip should close',
     clickout: true
+  });
+
+  $('#coordinates').click(function () {
+    var x = Math.random() * $(document).width();
+    var y = Math.random() * $(document).height();
+    $('#coord-x').val(x);
+    $('#coord-y').val(y);
+    IntTooltip.openTooltip({ x: x, y: y }, {
+      html: "Test"
+    });
   });
 });
 

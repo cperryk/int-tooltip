@@ -23,4 +23,14 @@ $(function(){
     clickout: true
   });
 
+  $('#coordinates').click(function(){
+    const x = Math.random() * $(document).width();
+    const y = Math.random() * $(document).height();
+    $('#coord-x').val(x);
+    $('#coord-y').val(y);
+    IntTooltip.openTooltip({x, y}, {
+      html: "Test"
+    });
+  });
+
 });

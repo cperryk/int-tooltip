@@ -51,7 +51,8 @@ IntTooltip.open = IntTooltip.openTooltip;
 class Tooltip{
 	/**
 	 * Constructs a Tooltip instance.
-	 * @param  {object} $target - jQuery selection of element the tooltip will appear at.
+	 * @param  {object|array} $target - jQuery selection of element the tooltip will appear at.
+	 *                                Or an array of coordinates.
 	 * @param  {object} conf - Options dictionary.
 	 * @param  {number} conf.interval - In case the $target position changes, the tooltip will poll
 	 * its position and reposition itself as needed. This option specifies the frequency of the poll.
@@ -171,6 +172,17 @@ class Tooltip{
 	 * @return {CoordinateDescriptor}
 	 */
 	static getCoords($target){
+		console.log($target);
+		if(($target instanceof jQuery) === false){
+			return {
+				x1: $target.x,
+				x2: $target.x,
+				cx: $target.x,
+				y1: $target.y,
+				y2: $target.y,
+				cy: $target.y
+			};
+		}
 		const off = $target.offset();
 		return {
 			x1: off.left,
