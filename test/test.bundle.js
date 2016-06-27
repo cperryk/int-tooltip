@@ -118,7 +118,11 @@ var Tooltip = function () {
 	_createClass(Tooltip, [{
 		key: 'reposition',
 		value: function reposition() {
-			this.smartPosition(this.conf.position);
+			if (this.conf.force) {
+				this.position(this.conf.position, Tooltip.getCoords(this.$target));
+			} else {
+				this.smartPosition(this.conf.position);
+			}
 		}
 		/**
    * Try to position the tooltip in every direction, starting with the preferred direction.
@@ -231,8 +235,8 @@ var Tooltip = function () {
 			switch (direction) {
 				case 'top':
 					css.left = anchor.x;
-					css.bottom = $(document).height() - anchor.y + offset;
-					css.transform = 'translateX(-50%)';
+					css.top = anchor.y - offset;
+					css.transform = 'translateX(-50%) translateY(-100%)';
 					classname = 'arrow-down';
 					break;
 				case 'right':
@@ -248,16 +252,18 @@ var Tooltip = function () {
 					classname = 'arrow-up';
 					break;
 				case 'left':
-					css.right = $(document).width() - anchor.x + offset;
+					css.left = anchor.x - offset;
 					css.top = anchor.y;
-					css.transform = 'translateY(-50%)';
+					css.transform = 'translateY(-50%) translateX(-100%)';
 					classname = 'arrow-right';
 					break;
 			}
 
 			this.$triangle.removeClass('arrow-down arrow-left arrow-up arrow-right').addClass(classname).css(css);
 
-			this.$container.css(css).css('margin-' + direction, 15);
+			this.$container.css(css);
+
+			console.log(this.$container[0]);
 
 			this.last_direction = direction;
 			this.last_coords = coords;
@@ -372,12 +378,13 @@ module.exports = {
 $(function () {
   var IntTooltip = require('./../intTooltip.js');
 
-  // positional testss
+  // positional tests
   $('.positional button').click(function () {
     IntTooltip.openTooltip($(this), {
       html: $(this).attr('id'),
       position: $(this).attr('id'),
-      offset: 4
+      offset: 4,
+      force: true
     });
   });
 
@@ -396,8 +403,8 @@ $(function () {
   });
 
   $('#coordinates').click(function () {
-    var x = Math.random() * $(document).width();
-    var y = Math.random() * $(document).height();
+    var x = 100;
+    var y = 100;
     $('#coord-x').val(x);
     $('#coord-y').val(y);
     IntTooltip.openTooltip({ x: x, y: y }, {

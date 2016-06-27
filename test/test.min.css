@@ -1,0 +1,1 @@
+.bounder{display:inline-block}.bounder .bound-space{background-color:gray;position:relative;width:400px;height:400px;display:inline-block}.bounder .bound-btn{position:absolute}.bounder .bound-btn.north{top:0px;left:50%}.bounder .bound-btn.east{top:50%;right:0px}.bounder .bound-btn.south{left:50%;bottom:0}.bounder .bound-btn.west{left:0px;top:50%}

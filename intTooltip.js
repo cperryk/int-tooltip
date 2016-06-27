@@ -113,7 +113,12 @@ class Tooltip{
 		return this;
 	}
 	reposition(){
-		this.smartPosition(this.conf.position);
+		if(this.conf.force){
+			this.position(this.conf.position, Tooltip.getCoords(this.$target));
+		}
+		else{
+			this.smartPosition(this.conf.position);
+		}
 	}
 	/**
 	 * Try to position the tooltip in every direction, starting with the preferred direction.
@@ -240,8 +245,8 @@ class Tooltip{
 		switch(direction){
 			case 'top':
 				css.left = anchor.x;
-				css.bottom = ($(document).height() - anchor.y) + offset;
-				css.transform = 'translateX(-50%)';
+				css.top = anchor.y - offset;
+				css.transform = 'translateX(-50%) translateY(-100%)';
 				classname = 'arrow-down';
 				break;
 			case 'right':
@@ -257,9 +262,9 @@ class Tooltip{
 				classname = 'arrow-up';
 				break;
 			case 'left':
-				css.right = ($(document).width() - anchor.x) + offset;
+				css.left = anchor.x - offset;
 				css.top = anchor.y;
-				css.transform = 'translateY(-50%)';
+				css.transform = 'translateY(-50%) translateX(-100%)';
 				classname = 'arrow-right';
 				break;
 		}
@@ -271,8 +276,9 @@ class Tooltip{
 			.css(css);
 
 		this.$container
-			.css(css)
-			.css('margin-' + direction, 15);
+			.css(css);
+
+		console.log(this.$container[0]);
 
 		this.last_direction = direction;
 		this.last_coords = coords;

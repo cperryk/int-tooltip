@@ -1,12 +1,13 @@
 $(function(){
   const IntTooltip = require('./../intTooltip.js');
 
-  // positional testss
+  // positional tests
   $('.positional button').click(function(){
     IntTooltip.openTooltip($(this), {
       html: $(this).attr('id'),
       position: $(this).attr('id'),
-      offset: 4
+      offset: 4,
+      force: true
     });
   });
 
@@ -25,8 +26,8 @@ $(function(){
   });
 
   $('#coordinates').click(function(){
-    const x = Math.random() * $(document).width();
-    const y = Math.random() * $(document).height();
+    const x = 100;
+    const y = 100;
     $('#coord-x').val(x);
     $('#coord-y').val(y);
     IntTooltip.openTooltip({x, y}, {

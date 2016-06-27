@@ -1,0 +1,29 @@
+.bounder{
+  display: inline-block;
+  .bound-space{
+    background-color: gray;
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: inline-block;
+  }
+  .bound-btn{
+    position: absolute;
+    &.north{
+      top: 0px;
+      left: 50%;
+    }
+    &.east{
+      top: 50%;
+      right: 0px;
+    }
+    &.south{
+      left: 50%;
+      bottom: 0;
+    }
+    &.west{
+      left: 0px;
+      top: 50%;
+    }
+  }
+}
