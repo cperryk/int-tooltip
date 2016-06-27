@@ -227,26 +227,28 @@ var Tooltip = function () {
 
 			var classname = void 0;
 			var css = {};
+			var offset = this.conf.offset || 0;
 			switch (direction) {
 				case 'top':
 					css.left = anchor.x;
-					css.bottom = $(document).height() - anchor.y;
+					css.bottom = $(document).height() - anchor.y + offset;
 					css.transform = 'translateX(-50%)';
 					classname = 'arrow-down';
 					break;
 				case 'right':
-					css.left = anchor.x;
+					css.left = anchor.x + offset;
 					css.top = anchor.y;
 					css.transform = 'translateY(-50%)';
 					classname = 'arrow-left';
 					break;
 				case 'bottom':
-					css.top = anchor.y, css.left = anchor.x;
+					css.top = anchor.y + offset;
+					css.left = anchor.x;
 					css.transform = 'translateX(-50%)';
 					classname = 'arrow-up';
 					break;
 				case 'left':
-					css.right = $(document).width() - anchor.x;
+					css.right = $(document).width() - anchor.x + offset;
 					css.top = anchor.y;
 					css.transform = 'translateY(-50%)';
 					classname = 'arrow-right';
@@ -283,7 +285,6 @@ var Tooltip = function () {
 	}], [{
 		key: 'getCoords',
 		value: function getCoords($target) {
-			console.log($target);
 			if ($target instanceof jQuery === false) {
 				return {
 					x1: $target.x,
@@ -375,7 +376,8 @@ $(function () {
   $('.positional button').click(function () {
     IntTooltip.openTooltip($(this), {
       html: $(this).attr('id'),
-      position: $(this).attr('id')
+      position: $(this).attr('id'),
+      offset: 4
     });
   });
 

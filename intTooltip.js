@@ -172,7 +172,6 @@ class Tooltip{
 	 * @return {CoordinateDescriptor}
 	 */
 	static getCoords($target){
-		console.log($target);
 		if(($target instanceof jQuery) === false){
 			return {
 				x1: $target.x,
@@ -237,32 +236,34 @@ class Tooltip{
 
 		let classname;
 		const css = {};
+		const offset = this.conf.offset || 0;
 		switch(direction){
 			case 'top':
 				css.left = anchor.x;
-				css.bottom = $(document).height() - anchor.y;
+				css.bottom = ($(document).height() - anchor.y) + offset;
 				css.transform = 'translateX(-50%)';
 				classname = 'arrow-down';
 				break;
 			case 'right':
-				css.left = anchor.x;
+				css.left = anchor.x + offset;
 				css.top = anchor.y;
 				css.transform = 'translateY(-50%)';
 				classname  = 'arrow-left';
 				break;
 			case 'bottom':
-				css.top = anchor.y,
+				css.top = anchor.y + offset;
 				css.left = anchor.x;
 				css.transform = 'translateX(-50%)';
 				classname = 'arrow-up';
 				break;
 			case 'left':
-				css.right = $(document).width() - anchor.x;
+				css.right = ($(document).width() - anchor.x) + offset;
 				css.top = anchor.y;
 				css.transform = 'translateY(-50%)';
 				classname = 'arrow-right';
 				break;
 		}
+
 
 		this.$triangle
 			.removeClass('arrow-down arrow-left arrow-up arrow-right')

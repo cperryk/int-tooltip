@@ -5,7 +5,8 @@ $(function(){
   $('.positional button').click(function(){
     IntTooltip.openTooltip($(this), {
       html: $(this).attr('id'),
-      position: $(this).attr('id')
+      position: $(this).attr('id'),
+      offset: 4
     });
   });
 
