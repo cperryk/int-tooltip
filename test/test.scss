@@ -1,13 +1,13 @@
-.bounder{
+.bounder-test{
   display: inline-block;
-  .bound-space{
+  .bounder{
     background-color: gray;
     position: relative;
     width: 400px;
     height: 400px;
     display: inline-block;
   }
-  .bound-btn{
+  .bounder-btn{
     position: absolute;
     &.north{
       top: 0px;

@@ -11,6 +11,16 @@ $(function(){
     });
   });
 
+  // bounder test
+  $('.bounder-test button').click(function(){
+    IntTooltip.openTooltip($(this), {
+      html: 'Test',
+      offset: 4,
+      interval: false,
+      $bounder: $('.bounder')
+    });
+  });
+
   // multiple tooltips test
   IntTooltip.bindButton('#group1', {
     html: 'Group 1',

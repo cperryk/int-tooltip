@@ -165,8 +165,9 @@ var Tooltip = function () {
 	}, {
 		key: 'checkPosition',
 		value: function checkPosition() {
+			var bounds = Tooltip.getCoords(this.conf.$bounder || $('body'));
 			var coords = Tooltip.getCoords(this.$container);
-			return coords.x1 > 0 && coords.x2 < $(document).width() && coords.y1 > 0 && coords.y2 < $(document).height();
+			return coords.x1 > bounds.x1 && coords.x2 < bounds.x2 && coords.y1 > bounds.y1 && coords.y2 < bounds.y2;
 		}
 		/**
    *
@@ -262,8 +263,6 @@ var Tooltip = function () {
 			this.$triangle.removeClass('arrow-down arrow-left arrow-up arrow-right').addClass(classname).css(css);
 
 			this.$container.css(css);
-
-			console.log(this.$container[0]);
 
 			this.last_direction = direction;
 			this.last_coords = coords;
@@ -385,6 +384,16 @@ $(function () {
       position: $(this).attr('id'),
       offset: 4,
       force: true
+    });
+  });
+
+  // bounder test
+  $('.bounder-test button').click(function () {
+    IntTooltip.openTooltip($(this), {
+      html: 'Test',
+      offset: 4,
+      interval: false,
+      $bounder: $('.bounder')
     });
   });
 

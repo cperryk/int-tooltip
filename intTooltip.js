@@ -155,11 +155,12 @@ class Tooltip{
 	 * @return {boolean}
 	 */
 	checkPosition(){
+		const bounds = Tooltip.getCoords(this.conf.$bounder || $('body'));
 		const coords = Tooltip.getCoords(this.$container);
-		return coords.x1 > 0 &&
-			coords.x2 < $(document).width() &&
-			coords.y1 > 0 &&
-			coords.y2 < $(document).height();
+		return coords.x1 > bounds.x1 &&
+			coords.x2 < bounds.x2 &&
+			coords.y1 > bounds.y1 &&
+			coords.y2 < bounds.y2;
 	}
 	/**
 	 *
@@ -277,8 +278,6 @@ class Tooltip{
 
 		this.$container
 			.css(css);
-
-		console.log(this.$container[0]);
 
 		this.last_direction = direction;
 		this.last_coords = coords;
