@@ -1,13 +1,12 @@
 # IntTooltip #
 
-IntTooltip is a simple jQuery-based library for opening a tooltip on a page at a specified element.
+IntTooltip is a simple plug-and-play jQuery-based library for opening a tooltip on a page at a specified element. It is meant to be bundled with Browserify and bundles with CSS via the [Browserify-CSS](https://www.npmjs.com/package/browserify-css) transform.
 
 Features:
 * Tooltips poll their targets for changes in position or dimensions and automatically reposition themselves accordingly.
-* Tooltips can contain asynchronously loaded content, such as images, and still position themselves correctly.
+* Tooltips can contain asynchronously loaded content, such as images, and will still position themselves correctly.
 
-IntTooltip is meant to be used with Browserify.
-
+**Warning**: Currently, IntTooltip assumes that jQuery is globally accessible via `$`.
 
 ## Example usage ##
 
@@ -59,3 +58,9 @@ Closes this tooltip.
 Repositions the tooltip.
 
 ## CSS ##
+
+To override any CSS rules, simply examine `intTooltip.scss`.
+
+## Testing ##
+
+To test, run `npm run build-test`. Then, open `test/test.html` and visually check to the tooltip in all the test cases.
