@@ -12,7 +12,7 @@ Features:
 
 ```
 const IntTooltip = require('int-tooltip');
-const tooltip = IntTooltip.open({
+const tooltip = IntTooltip.open('#some-button', {
   position: 'top',
   html: 'Hello world!',
   onClose: function(){
